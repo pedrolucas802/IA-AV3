@@ -49,7 +49,7 @@ while k < itMax and melhoria:
             ax.scatter(y1, y2, F, marker='x', color='k', linewidths=2)
             plt.pause(0.1)
             break
-        else:
+        else:       #TALVEZ ISSO ESTÁ NO CANTO ERRADO 
             contador += 1
         if contador == 50:
             break

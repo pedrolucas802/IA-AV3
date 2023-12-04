@@ -23,8 +23,8 @@ itMax = 1000
 # HILL CLIMBING--------------------------------------------------------NÃO CERTO----------------
 X0_1 = 20
 X0_2 = -200
-E = 5
-maxNeighbor = 30
+E = 2
+maxNeighbor = 90
 Hill_Xbest1 = X0_1
 Hill_Xbest2 = X0_2
 Hill_Fbest = f(Hill_Xbest1, Hill_Xbest2)

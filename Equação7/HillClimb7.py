@@ -23,8 +23,8 @@ itMax = 1000
 # HILL CLIMBING--------------------------------------------------------NÃO ESTÁ CONSTANTE----------------
 X0_1 = np.pi
 X0_2 = 0
-E = 1.2
-maxNeighbor = 30
+E = 0.2
+maxNeighbor = 60
 Hill_Xbest1 = X0_1
 Hill_Xbest2 = X0_2
 Hill_Fbest = f(Hill_Xbest1, Hill_Xbest2)
