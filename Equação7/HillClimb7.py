@@ -23,8 +23,8 @@ itMax = 1000
 # HILL CLIMBING--------------------------------------------------------NÃO ESTÁ CONSTANTE----------------
 X0_1 = np.pi
 X0_2 = 0
-E = 0.2
-maxNeighbor = 60
+E = 0.5
+maxNeighbor = 20
 Hill_Xbest1 = X0_1
 Hill_Xbest2 = X0_2
 Hill_Fbest = f(Hill_Xbest1, Hill_Xbest2)
@@ -50,11 +50,12 @@ while k < itMax and melhoria:
             ax.scatter(y1, y2, F, marker='x', color='k', linewidths=2)
             plt.pause(0.1)
             break
-        else:
-            contador += 1
-        if contador == 50:
-            break
+        
+    if contador == 50:
+        break
     k += 1
+    contador += 1
+    
 
 
 ax.scatter(Hill_Xbest1, Hill_Xbest2, Hill_Fbest, marker='x', color='green',s=100,linewidths=5)

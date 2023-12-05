@@ -24,14 +24,14 @@ itMax = 1000
 
 xl = [-100,-100]
 xu = [100,100]
-Localsigma = 1
+Localsigma = 1.5
 LocalXbest1 = np.random.uniform(xl[0],xu[0])
 LocalXbest2 = np.random.uniform(xl[1],xu[1])
 Fbest = f(LocalXbest1,LocalXbest2)
 ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='purple',linewidths = 2)
 i=0
 contador = 0
-while(i<itMax):
+while(i<itMax and contador <= 100):
     n = np.random.normal(0,Localsigma)
     Xcand1 = LocalXbest1 + n
     Xcand2 = LocalXbest2 + n
@@ -55,8 +55,6 @@ while(i<itMax):
         plt.pause(0.1)
     else:
         contador += 1
-    if contador == 50:
-        break
     i+=1
 
 ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='green',s=100,linewidths=5)

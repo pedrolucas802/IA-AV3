@@ -25,7 +25,7 @@ itMax = 1000
 
 xl = [-8,-8]
 xu = [8,8]
-Localsigma = 0.5
+Localsigma = 0.9
 LocalXbest1 = np.random.uniform(xl[0],xu[0])
 LocalXbest2 = np.random.uniform(xl[1],xu[1])
 Fbest = f(LocalXbest1,LocalXbest2)

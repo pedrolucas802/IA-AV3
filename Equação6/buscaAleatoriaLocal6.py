@@ -25,7 +25,7 @@ itMax = 1000
 
 xl = [-5.12,-5.12]
 xu = [5.12,5.12]
-Localsigma = 1
+Localsigma = 0.3
 LocalXbest1 = np.random.uniform(xl[0],xu[0])
 LocalXbest2 = np.random.uniform(xl[1],xu[1])
 Fbest = f(LocalXbest1,LocalXbest2)
@@ -47,7 +47,7 @@ while(i<itMax):
         Xcand2 = xu[1]
     # AcabouVerificação
     Fcand = f(Xcand1,Xcand2)
-    if(Fcand < Fbest):
+    if(Fcand > Fbest):
         contador = 0
         LocalXbest1 = Xcand1
         LocalXbest2 = Xcand2

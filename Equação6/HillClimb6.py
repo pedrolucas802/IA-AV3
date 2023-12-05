@@ -21,6 +21,8 @@ ax.set_zlabel('f(x1, x2)')
 itMax = 1000
 
 # HILL CLIMBING--------------------------------------TA ERRADO----------------------------------
+xl = [-5.12,-5.12]
+xu = [5.12,5.12]
 X0_1 = 3
 X0_2 = -1
 E = 0.5
@@ -40,7 +42,15 @@ while k < itMax and melhoria:
         y1 = np.random.uniform(low=Hill_Xbest1 - E, high=Hill_Xbest1 + E)
         y2 = np.random.uniform(low=Hill_Xbest2 - E, high=Hill_Xbest2 + E)
         F = f(y1, y2)
-        
+        # if y1 < xl[0]:
+        #     y1 = xl[0]
+        # if y1 > xu[0]:
+        #     y1 = xu[0]
+        # if y2 < xl[1]:      #Essa verificação deve estra errada
+        #     y2 = xl[1]
+        # if y2> xu[1]:
+        #     y2 = xu[1]
+                
         if F > Hill_Fbest:
             contador= 0
             Hill_Xbest1 = y1

@@ -25,7 +25,7 @@ itMax = 1000
 
 xl = [0,0]
 xu = [np.pi,np.pi]
-Localsigma = 2
+Localsigma = 0.9
 LocalXbest1 = np.random.uniform(xl[0],xu[0])
 LocalXbest2 = np.random.uniform(xl[1],xu[1])
 Fbest = f(LocalXbest1,LocalXbest2)
@@ -33,9 +33,9 @@ ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='purple',linewidth
 i=0
 contador = 0
 while(i<itMax):
-    n = np.random.normal(0,Localsigma)
-    Xcand1 = LocalXbest1 + n
-    Xcand2 = LocalXbest2 + n
+    n = np.random.normal(0,Localsigma,size=(2,1))
+    Xcand1 = LocalXbest1 + n[0,0]
+    Xcand2 = LocalXbest2 + n[1,0]
    # Verificar a violação da restrição em caixa.
     if Xcand1 < xl[0]:
         Xcand1 = xl[0]
