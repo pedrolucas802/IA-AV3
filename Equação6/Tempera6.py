@@ -24,11 +24,11 @@ ax.set_zlabel('f(x1, x2)')
 
 
 itMax = 1000
-
+T=1000
 
 xl = [-5.12,-5.12]
 xu = [5.12,5.12]
-TemperaSigma = 2
+TemperaSigma = 0.01
 TemperaXbest1 = np.random.uniform(xl[0],xu[0])
 TemperaXbest2 = np.random.uniform(xl[1],xu[1])
 TemperaFbest = f(TemperaXbest1,TemperaXbest2)
@@ -47,19 +47,17 @@ while(i<itMax):
     if Xcand2 > xu[1]:
         Xcand2 = xu[1]
     Fcand = f(Xcand1,Xcand2)
-    if(Fcand < TemperaFbest):
+    if(Fcand > TemperaFbest):
         contador =0
         TemperaXbest1 = Xcand1
         TemperaXbest2 = Xcand2
         TemperaFbest = Fcand
-        ax.scatter(TemperaXbest1, TemperaXbest2, TemperaFbest, marker='x', color='k', linewidths=2)
-        plt.pause(0.1)
+
     elif(P(Fcand,TemperaFbest)>= np.random.uniform(low=0,high=1)):
         TemperaXbest1 = Xcand1
         TemperaXbest2 = Xcand2
         TemperaFbest = Fcand
-        ax.scatter(TemperaXbest1, TemperaXbest2, TemperaFbest, marker='x', color='k', linewidths=2)
-        plt.pause(0.1)
+ 
     i+=1
     T = 0.99*T
         

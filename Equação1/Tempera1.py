@@ -1,10 +1,11 @@
+import statistics
 import numpy as np
 import matplotlib.pyplot as plt
 
-def f(x1, x2):  # domínio |-100 , 100|
+def f(x1, x2):  
     return x1**2 + x2**2
 
-def P(Fj , Fi):
+def P(Fj, Fi, T):
     return np.exp(-((Fj-Fi)/T))
 
 x1 = np.linspace(-100, 100, 1000)
@@ -19,45 +20,65 @@ ax.set_xlabel('x1')
 ax.set_ylabel('x2')
 ax.set_zlabel('f(x1, x2)')
 
+moda_x1 = []
+moda_x2 = []
+moda_f = []
 
-itMax = 1000
-T=1000
-xl = [-100,-100]
-xu = [100,100]
-TemperaSigma = 2
-TemperaXbest1 = np.random.uniform(xl[0],xu[0])
-TemperaXbest2 = np.random.uniform(xl[1],xu[1])
-TemperaFbest = f(TemperaXbest1,TemperaXbest2)
-i=0
-contador = 0
-while(i<itMax):
-    n = np.random.normal(0,TemperaSigma)
-    Xcand1 = TemperaXbest1 + n
-    Xcand2 = TemperaXbest2 + n
-    if Xcand1 < xl[0]:
-        Xcand1 = xl[0]
-    if Xcand1 > xu[0]:
-        Xcand1 = xu[0]
-    if Xcand2 < xl[1]:     
-        Xcand2 = xl[1]
-    if Xcand2 > xu[1]:
-        Xcand2 = xu[1]
-    Fcand = f(Xcand1,Xcand2)
-    if(Fcand < TemperaFbest):
-        contador =0
-        TemperaXbest1 = Xcand1
-        TemperaXbest2 = Xcand2
-        TemperaFbest = Fcand
-        ax.scatter(TemperaXbest1, TemperaXbest2, TemperaFbest, marker='x', color='k', linewidths=2)
-        plt.pause(0.1)
-    elif(P(Fcand,TemperaFbest)>= np.random.uniform(low=0,high=1)):
-        TemperaXbest1 = Xcand1
-        TemperaXbest2 = Xcand2
-        TemperaFbest = Fcand
-        ax.scatter(TemperaXbest1, TemperaXbest2, TemperaFbest, marker='x', color='k', linewidths=2)
-        plt.pause(0.1)
-    i+=1
-    T = 0.99*T
-        
-ax.scatter(TemperaXbest1, TemperaXbest2, TemperaFbest, marker='x', color='green',s=100,linewidths=5)
+p = 0
+while p < 100:
+    itMax = 1000
+    T = 1000
+    xl = [-100, -100]
+    xu = [100, 100]
+    TemperaSigma = 2
+    TemperaXbest1 = np.random.uniform(xl[0], xu[0])
+    TemperaXbest2 = np.random.uniform(xl[1], xu[1])
+    TemperaFbest = f(TemperaXbest1, TemperaXbest2)
+
+    i = 0
+    contador = 0
+    while i < itMax:
+        n = np.random.normal(0, TemperaSigma)
+        Xcand1 = TemperaXbest1 + n
+        Xcand2 = TemperaXbest2 + n
+        if Xcand1 < xl[0]:
+            Xcand1 = xl[0]
+        if Xcand1 > xu[0]:
+            Xcand1 = xu[0]
+        if Xcand2 < xl[1]:
+            Xcand2 = xl[1]
+        if Xcand2 > xu[1]:
+            Xcand2 = xu[1]
+        Fcand = f(Xcand1, Xcand2)
+        if Fcand < TemperaFbest:
+            contador = 0
+            TemperaXbest1 = Xcand1
+            TemperaXbest2 = Xcand2
+            TemperaFbest = Fcand
+        elif P(Fcand, TemperaFbest, T) >= np.random.uniform(low=0, high=1):
+            TemperaXbest1 = Xcand1
+            TemperaXbest2 = Xcand2
+            TemperaFbest = Fcand
+
+        i += 1
+        T = 0.99*T
+
+    # Armazena os valores de cada rodada
+    moda_x1.append(TemperaXbest1)
+    moda_x2.append(TemperaXbest2)
+    moda_f.append(TemperaFbest)
+
+    p += 1
+
+# Calcula a moda
+moda_x1 = np.array(moda_x1)
+moda_x2 = np.array(moda_x2)
+moda_f = np.array(moda_f)
+
+moda_x1_final = statistics.mode(moda_x1)
+moda_x2_final = statistics.mode(moda_x2)
+moda_f_final = statistics.mode(moda_f)
+
+# Plota a moda no gráfico
+ax.scatter(moda_x1_final, moda_x2_final, moda_f_final, marker='x', color='green', s=100, linewidths=5)
 plt.show()

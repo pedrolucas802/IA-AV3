@@ -1,12 +1,11 @@
 import numpy as np
 import matplotlib . pyplot as plt
 
-def f(x1 , x2 ): # dominio  |-2,2| |-1,3|
-    return ((x1 - 1)**2 + 100*(x2 - x1**2)**2)
+def f(x1 , x2 ):
+    return (-(x2 + 47) * np.sin(np.sqrt(np.abs(x1/2 + (x2 + 47)))) - x1 * np.sin(np.sqrt(np.abs(x1 - (x2 + 47)))))
 
-x1 = np.linspace(-2, 2, 1000)
-x2 = np.linspace(-1, 3, 1000)
-X1, X2 = np.meshgrid(x1, x2)
+x1 = np.linspace ( -200 ,20 ,1000)
+X1, X2 = np.meshgrid(x1, x1)
 Y = f(X1, X2)
 
 fig = plt.figure()

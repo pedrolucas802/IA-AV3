@@ -1,3 +1,4 @@
+import statistics
 import numpy as np
 import matplotlib . pyplot as plt
 
@@ -19,48 +20,62 @@ ax.set_xlabel('x1')
 ax.set_ylabel('x2')
 ax.set_zlabel('f(x1, x2)')
 
+moda_x1 = []
+moda_x2 = []
+moda_f = []
 
-itMax = 1000
+p = 0
+while p < 100:
+    itMax = 1000
 
 
-xl = [0,0]
-xu = [np.pi,np.pi]
-Localsigma = 0.9
-LocalXbest1 = np.random.uniform(xl[0],xu[0])
-LocalXbest2 = np.random.uniform(xl[1],xu[1])
-Fbest = f(LocalXbest1,LocalXbest2)
-ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='purple',linewidths = 2)
-i=0
-contador = 0
-while(i<itMax):
-    n = np.random.normal(0,Localsigma,size=(2,1))
-    Xcand1 = LocalXbest1 + n[0,0]
-    Xcand2 = LocalXbest2 + n[1,0]
-   # Verificar a violação da restrição em caixa.
-    if Xcand1 < xl[0]:
-        Xcand1 = xl[0]
-    if Xcand1 > xu[0]:
-        Xcand1 = xu[0]
-    if Xcand2 < xl[1]:      #Essa verificação deve estra errada
-        Xcand2 = xl[1]
-    if Xcand2 > xu[1]:
-        Xcand2 = xu[1]
-    # AcabouVerificação
-    Fcand = f(Xcand1,Xcand2)
-    if(Fcand < Fbest):
-        LocalXbest1 = Xcand1
-        LocalXbest2 = Xcand2
-        Fbest = Fcand
-        ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='k', linewidths=2)
-        plt.pause(0.1)
-        contador = 0
-    else:
-        contador += 1
-    if contador == 50:
-        break
-    i+=1
+    xl = [0,0]
+    xu = [np.pi,np.pi]
+    Localsigma = 0.09
+    LocalXbest1 = np.random.uniform(xl[0],xu[0])
+    LocalXbest2 = np.random.uniform(xl[1],xu[1])
+    Fbest = f(LocalXbest1,LocalXbest2)  
+    i=0
+    contador = 0
+    while(i<itMax):
+        n = np.random.normal(0,Localsigma,size=(2,1))
+        Xcand1 = LocalXbest1 + n[0,0]
+        Xcand2 = LocalXbest2 + n[1,0]
+    # Verificar a violação da restrição em caixa.
+        if Xcand1 < xl[0]:
+            Xcand1 = xl[0]
+        if Xcand1 > xu[0]:
+            Xcand1 = xu[0]
+        if Xcand2 < xl[1]:      #Essa verificação deve estra errada
+            Xcand2 = xl[1]
+        if Xcand2 > xu[1]:
+            Xcand2 = xu[1]
+        # AcabouVerificação
+        Fcand = f(Xcand1,Xcand2)
+        if(Fcand < Fbest):
+            LocalXbest1 = Xcand1
+            LocalXbest2 = Xcand2
+            Fbest = Fcand
+            contador = 0
+        else:
+            contador += 1
+        if contador == 50:
+            break
+        i+=1
+    moda_x1.append(LocalXbest1)
+    moda_x2.append(LocalXbest2)
+    moda_f.append(Fbest)
+    p+=1
 
-ax.scatter(LocalXbest1, LocalXbest2, Fbest, marker='x', color='green',s=100,linewidths=5)
+# Calcula a moda
+moda_x1 = np.array(moda_x1)
+moda_x2 = np.array(moda_x2)
+moda_f = np.array(moda_f)
+
+moda_x1_final = statistics.mode(moda_x1)
+moda_x2_final = statistics.mode(moda_x2)
+moda_f_final = statistics.mode(moda_f)
+
+# Plota a moda no gráfico
+ax.scatter(moda_x1_final, moda_x2_final, moda_f_final, marker='x', color='green', s=100, linewidths=5)
 plt.show()
-
-bp=4

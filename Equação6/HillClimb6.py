@@ -1,3 +1,4 @@
+import statistics
 import numpy as np
 import matplotlib . pyplot as plt
 
@@ -17,56 +18,71 @@ ax.set_xlabel('x1')
 ax.set_ylabel('x2')
 ax.set_zlabel('f(x1, x2)')
 
+moda_x1 = []
+moda_x2 = []
+moda_f = []
 
-itMax = 1000
+p = 0
+while p < 100:
+    itMax = 1000
 
-# HILL CLIMBING--------------------------------------TA ERRADO----------------------------------
-xl = [-5.12,-5.12]
-xu = [5.12,5.12]
-X0_1 = 3
-X0_2 = -1
-E = 0.5
-maxNeighbor = 10
-Hill_Xbest1 = X0_1
-Hill_Xbest2 = X0_2
-Hill_Fbest = f(Hill_Xbest1, Hill_Xbest2)
-k = 0
-melhoria = True
-ax.scatter(Hill_Xbest1, Hill_Xbest2, Hill_Fbest, marker='x', color='purple',linewidths=3)
-contador = 0
-while k < itMax and melhoria:
-    l = 0
-    melhoria = False
-    while l < maxNeighbor:
-        l += 1
-        y1 = np.random.uniform(low=Hill_Xbest1 - E, high=Hill_Xbest1 + E)
-        y2 = np.random.uniform(low=Hill_Xbest2 - E, high=Hill_Xbest2 + E)
-        F = f(y1, y2)
-        # if y1 < xl[0]:
-        #     y1 = xl[0]
-        # if y1 > xu[0]:
-        #     y1 = xu[0]
-        # if y2 < xl[1]:      #Essa verificação deve estra errada
-        #     y2 = xl[1]
-        # if y2> xu[1]:
-        #     y2 = xu[1]
-                
-        if F > Hill_Fbest:
-            contador= 0
-            Hill_Xbest1 = y1
-            Hill_Xbest2 = y2
-            Hill_Fbest = F
-            melhoria = True
-            ax.scatter(y1, y2, F, marker='x', color='k', linewidths=2)
-            plt.pause(0.1)
-            break
-        else:
-            contador += 1
-        if contador == 50:
-            break
-    k += 1
+    xl = [-5.12,-5.12]
+    xu = [5.12,5.12]
+    X0_1 = 1
+    X0_2 = 1
+    E = 0.8
+    maxNeighbor = 20
+    Hill_Xbest1 = X0_1
+    Hill_Xbest2 = X0_2
+    Hill_Fbest = f(Hill_Xbest1, Hill_Xbest2)
+    k = 0
+    melhoria = True
+    contador = 0
+    while k < itMax and melhoria:
+        l = 0
+        melhoria = False
+        while l < maxNeighbor:
+            l += 1
+            y1 = np.random.uniform(low=Hill_Xbest1 - E, high=Hill_Xbest1 + E)
+            y2 = np.random.uniform(low=Hill_Xbest2 - E, high=Hill_Xbest2 + E)
+            
+            if y1 < xl[0]:
+                y1 = xl[0]
+            if y1 > xu[0]:
+                y1 = xu[0]
+            if y2 < xl[1]:      #Essa verificação deve estra errada
+                y2 = xl[1]
+            if y2> xu[1]:
+                y2 = xu[1]
+            F = f(y1, y2)   
+            if F > Hill_Fbest:
+                contador= 0
+                Hill_Xbest1 = y1
+                Hill_Xbest2 = y2
+                Hill_Fbest = F
+                melhoria = True
+                break
+            else:
+                contador += 1
+            if contador == 50:
+                break
+        k += 1
+    moda_x1.append(Hill_Xbest1)
+    moda_x2.append(Hill_Xbest2)
+    moda_f.append(Hill_Fbest)
+
+    p+=1
 
 
-ax.scatter(Hill_Xbest1, Hill_Xbest2, Hill_Fbest, marker='x', color='green',s=100,linewidths=5)
+# Calcula a moda
+moda_x1 = np.array(moda_x1)
+moda_x2 = np.array(moda_x2)
+moda_f = np.array(moda_f)
 
+moda_x1_final = statistics.mode(moda_x1)
+moda_x2_final = statistics.mode(moda_x2)
+moda_f_final = statistics.mode(moda_f)
+
+# Plota a moda no gráfico
+ax.scatter(moda_x1_final, moda_x2_final, moda_f_final, marker='x', color='green', s=100, linewidths=5)
 plt.show()
